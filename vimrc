@@ -111,7 +111,8 @@ set laststatus=2
 map <C-n> :NERDTreeToggle<CR>  " Use Ctrl^n to toggle NERDTree
 
 " vim-auto-save
-let g:auto_save = 1            " Enable auto saving be default
-
+let g:auto_save = 1                  " Enable auto saving be default
+let g:auto_save_in_insert_mode = 0   " Do not auto save in insert mode
+let g:auto_save_silent = 1           " Do not display notification
 " }}} "
 
