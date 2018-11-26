@@ -1,1 +1,25 @@
-" This file is empty because NixOS manages plugins for us
+" Download vim-plug if not installed
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif 
+
+" PLUGINS {{{ "
+" Initial vim-plug setup
+filetype off
+call plug#begin()
+
+" Tools
+Plug 'scrooloose/nerdtree'                        " File explorer
+Plug 'vim-scripts/vim-auto-save'		  " Auto saver
+
+" Interface
+Plug 'tomasr/molokai'                             " Color scheme
+
+" Update and initialize plugins
+call plug#end()
+" ^ This also automatically sets:
+" filetype plugin indent on
+" syntax enable
+" }}} PLUGINS "

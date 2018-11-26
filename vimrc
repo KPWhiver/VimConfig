@@ -1,4 +1,4 @@
-source .vimrc_plugins     " Loads plugins, this is in a separate file because the different plugin loaders are used on different systems
+source ~/.vimrc_plugins     " Loads plugins, this is in a separate file because the different plugin loaders are used on different systems
 
 " BEHAVIOUR {{{ "
 " Hide buffers instead of closing them
