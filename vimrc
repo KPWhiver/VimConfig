@@ -73,6 +73,11 @@ nmap <CR> a<CR><Esc>
 " Allow usage of CTRL W in insert mode
 imap <C-w> <Esc><C-w>
 
+" Change the cursor based on the mode (only works in konsole)
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
 " }}} BEHAVIOUR "
 
 " APPEARANCE {{{ "
