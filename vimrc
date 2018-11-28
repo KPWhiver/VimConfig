@@ -58,6 +58,9 @@ if has("clipboard")
     endif
 endif
 
+" Write file using sudo
+command SUw w !sudo tee "%" > /dev/null
+
 " Why cycle when you can fly
 nnoremap <leader>l :ls<CR>:b<space>
 
