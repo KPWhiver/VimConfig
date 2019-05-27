@@ -61,6 +61,12 @@ endif
 " Write file using sudo
 command SUw w !sudo tee "%" > /dev/null
 
+" Always open terminals in current window
+command Term terminal ++curwin
+
+" Make escape work in terminal mode
+tnoremap <Esc> <C-\><C-n>
+
 " Why cycle when you can fly
 nnoremap <leader>l :ls<CR>:b<space>
 
