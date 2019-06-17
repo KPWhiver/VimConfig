@@ -6,6 +6,10 @@ source ~/.vimrc_plugins     " Loads plugins, this is in a separate file because 
 " files to be open at the same time.
 set hidden
 
+" Set leaders
+" Potential leaders: , - + <space> \ ` @ <cr> 
+let maplocalleader="`"
+
 " Enable mouse control, nice to have sometimes
 set mouse=a
 
@@ -76,9 +80,6 @@ nnoremap ; :
 " Quickly get out of insert mode without reaching for escape
 inoremap jj <Esc>
 
-" Use ENTER in normal mode to insert a newline
-nmap <CR> a<CR><Esc>
-
 " Allow usage of CTRL W in insert mode
 imap <C-w> <Esc><C-w>
 
@@ -127,5 +128,9 @@ map <C-n> :NERDTreeToggle<CR>  " Use Ctrl^n to toggle NERDTree
 let g:auto_save = 1                  " Enable auto saving be default
 let g:auto_save_in_insert_mode = 0   " Do not auto save in insert mode
 let g:auto_save_silent = 1           " Do not display notification
+
+" org-mode
+let g:org_heading_shade_leading_start = 0
+let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)']
 " }}} "
 

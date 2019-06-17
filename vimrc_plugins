@@ -15,6 +15,8 @@ Plug 'scrooloose/nerdtree'                        " File explorer
 Plug 'vim-scripts/vim-auto-save'		  " Auto saver
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-speeddating'
+Plug 'jceb/vim-orgmode'
 
 " Interface
 Plug 'tomasr/molokai'                             " Color scheme
