@@ -71,9 +71,6 @@ command Term terminal ++curwin
 " Make escape work in terminal mode
 tnoremap <Esc> <C-\><C-n>
 
-" Why cycle when you can fly
-nnoremap <leader>l :ls<CR>:b<space>
-
 " Use ; as an alias for : (skip the shift)
 nnoremap ; :
 
