@@ -128,6 +128,6 @@ let g:auto_save_silent = 1           " Do not display notification
 
 " org-mode
 let g:org_heading_shade_leading_start = 0
-let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)']
+let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)', 'CANCELLED(c)', 'DELEGATED(g)']
 " }}} "
 
