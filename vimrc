@@ -8,7 +8,8 @@ set hidden
 
 " Set leaders
 " Potential leaders: , - + <space> \ ` @ <cr> 
-let maplocalleader="`"
+let maplocalleader=","
+nnoremap , <nop>
 
 " Enable mouse control, nice to have sometimes
 set mouse=a
@@ -129,5 +130,14 @@ let g:auto_save_silent = 1           " Do not display notification
 " org-mode
 let g:org_heading_shade_leading_start = 0
 let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)', 'CANCELLED(c)', 'DELEGATED(g)']
+
+nmap <localleader>dd <nop>
+nmap <localleader>cd <localleader>ddoCOMPLETED: <Esc><localleader>si
+nmap <localleader>cg <localleader>dgoCOMPLETED: <Esc><localleader>si
+nmap <localleader>cc <localleader>dcoCOMPLETED: <Esc><localleader>si
+nmap <localleader>ct <localleader>dt
+nmap <localleader>cw <localleader>dw
+nmap <localleader>cb <localleader>db
+nmap <localleader>c<Left> @<Plug>OrgTodoToggleNonInteractive
 " }}} "
 
