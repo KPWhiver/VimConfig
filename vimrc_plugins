@@ -17,6 +17,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-speeddating'
 Plug 'jceb/vim-orgmode'
+Plug 'sheerun/vim-polyglot'
 
 " Interface
 Plug 'tomasr/molokai'                             " Color scheme
