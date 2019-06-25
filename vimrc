@@ -122,6 +122,8 @@ set laststatus=2
 " PLUGINS {{{
 
 " FZF
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+
 nmap <leader>* :Ag <C-r><C-w><CR>
 nmap <leader>/ :Ag<CR>
 
