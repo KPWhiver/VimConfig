@@ -8,7 +8,9 @@ set hidden
 
 " Set leaders
 " Potential leaders: , - + <space> \ ` @ <cr> 
+let mapleader=" "
 let maplocalleader=","
+nnoremap <space> <nop>
 nnoremap , <nop>
 
 " Enable mouse control, nice to have sometimes
@@ -118,6 +120,10 @@ set laststatus=2
 " }}} "
 
 " PLUGINS {{{
+
+" FZF
+nmap <leader>* :Ag <C-r><C-w><CR>
+nmap <leader>/ :Ag<CR>
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>  " Use Ctrl^n to toggle NERDTree
