@@ -36,6 +36,8 @@ set ttimeoutlen=50    " Less delay when switching modes
 " Misc configs
 set backspace=indent,eol,start " Allow backspacing over everything in insert mode
 
+set foldmethod=syntax
+
 set number          " Show line numbers
 set showmatch       " Show matching parenthesis
 set autoindent      " Always autoindent
@@ -76,6 +78,9 @@ tnoremap <Esc> <C-\><C-n>
 
 " Use ; as an alias for : (skip the shift)
 nnoremap ; :
+
+" Use tab as the fold cycle key
+nnoremap <Tab> za
 
 " Quickly get out of insert mode without reaching for escape
 inoremap jj <Esc>
@@ -146,5 +151,7 @@ nmap <localleader>ct <localleader>dt
 nmap <localleader>cw <localleader>dw
 nmap <localleader>cb <localleader>db
 nmap <localleader>c<Left> @<Plug>OrgTodoToggleNonInteractive
+nmap <localleader><Tab> @<Plug>OrgToggleFoldingNormal
+nmap <localleader><S-Tab> @<Plug>OrgToggleFoldingReverse
 " }}} "
 
