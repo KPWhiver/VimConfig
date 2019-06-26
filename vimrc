@@ -139,7 +139,6 @@ let g:auto_save_silent = 1           " Do not display notification
 let g:org_heading_shade_leading_start = 0
 let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)', 'CANCELLED(c)', 'DELEGATED(g)']
 
-nmap <localleader>dd <nop>
 nmap <localleader>cd <localleader>ddoCOMPLETED: <Esc><localleader>si
 nmap <localleader>cg <localleader>dgoCOMPLETED: <Esc><localleader>si
 nmap <localleader>cc <localleader>dcoCOMPLETED: <Esc><localleader>si
