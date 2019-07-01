@@ -36,7 +36,11 @@ set ttimeoutlen=50    " Less delay when switching modes
 " Misc configs
 set backspace=indent,eol,start " Allow backspacing over everything in insert mode
 
-set foldmethod=syntax
+set foldmethod=indent
+set foldtext=getline(v:foldstart)
+set foldlevel=1
+nnoremap [[ zk
+nnoremap ]] zj
 
 set number          " Show line numbers
 set showmatch       " Show matching parenthesis
@@ -81,6 +85,7 @@ nnoremap ; :
 
 " Use tab as the fold cycle key
 nnoremap <Tab> za
+nnoremap <S-Tab> zO
 
 " Quickly get out of insert mode without reaching for escape
 inoremap jj <Esc>
