@@ -20,6 +20,12 @@ Plug 'tpope/vim-speeddating'
 Plug 'jceb/vim-orgmode'
 Plug 'sheerun/vim-polyglot'
 
+Plug 'Shougo/deoplete.nvim'
+if !has('nvim')
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
 " Interface
 Plug 'tomasr/molokai'                             " Color scheme
 

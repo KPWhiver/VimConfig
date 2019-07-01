@@ -140,6 +140,11 @@ let g:auto_save = 1                  " Enable auto saving be default
 let g:auto_save_in_insert_mode = 0   " Do not auto save in insert mode
 let g:auto_save_silent = 1           " Do not display notification
 
+" deoplete
+let g:deoplete#enable_at_startup = 1
+inoremap <expr> <Tab>     pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab>   pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 " org-mode
 let g:org_heading_shade_leading_start = 0
 let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)', 'CANCELLED(c)', 'DELEGATED(g)']
