@@ -154,9 +154,9 @@ inoremap <expr> <S-Tab>   pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:org_heading_shade_leading_start = 0
 let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)', 'CANCELLED(c)', 'DELEGATED(g)']
 
-nmap <localleader>cd <localleader>ddoCOMPLETED: <Esc><localleader>si
-nmap <localleader>cg <localleader>dgoCOMPLETED: <Esc><localleader>si
-nmap <localleader>cc <localleader>dcoCOMPLETED: <Esc><localleader>si
+nmap <localleader>cd <localleader>ddoCLOSED: <Esc><localleader>si
+nmap <localleader>cg <localleader>dgoCLOSED: <Esc><localleader>si
+nmap <localleader>cc <localleader>dcoCLOSED: <Esc><localleader>si
 nmap <localleader>ct <localleader>dt
 nmap <localleader>cw <localleader>dw
 nmap <localleader>cb <localleader>db
