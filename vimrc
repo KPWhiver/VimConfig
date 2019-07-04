@@ -36,11 +36,12 @@ set ttimeoutlen=50    " Less delay when switching modes
 " Misc configs
 set backspace=indent,eol,start " Allow backspacing over everything in insert mode
 
-set foldmethod=indent
+set foldmethod=syntax
 set foldtext=getline(v:foldstart)
 set foldlevel=1
 nnoremap [[ zk
 nnoremap ]] zj
+autocmd FileType python setlocal foldmethod=indent
 
 set number          " Show line numbers
 set showmatch       " Show matching parenthesis
