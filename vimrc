@@ -140,6 +140,8 @@ nmap <leader>/ :Ag<CR>
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>  " Use Ctrl^n to toggle NERDTree
+let NERDTreeMapActivateNode="<Tab>"
+let NERDTreeMapOpenRecursively="<S-Tab>"
 
 " vim-auto-save
 let g:auto_save = 1                  " Enable auto saving be default
