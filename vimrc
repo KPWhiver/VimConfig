@@ -109,6 +109,10 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Color theme
 colorscheme molokai
 
+" Highlight all tabs and trailing whitespace characters.
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$\|\t/
+
 " Use actual truecolor colors if available
 if has("termguicolors")
     set termguicolors
