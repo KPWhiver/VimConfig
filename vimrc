@@ -25,6 +25,8 @@ set wildmenu
 " A lot of history
 set history=1000
 set undolevels=1000
+set undodir=~/.vim/undodir
+set undofile
 
 " Don't make temporary/backup files
 set nobackup
