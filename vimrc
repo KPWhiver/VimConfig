@@ -1,5 +1,3 @@
-source ~/.vimrc_plugins     " Loads plugins, this is in a separate file because the different plugin loaders are used on different systems
-
 " BEHAVIOUR {{{ "
 " Hide buffers instead of closing them
 " Absolutely essential since this allows multiple
@@ -44,6 +42,7 @@ set foldlevel=1
 nnoremap [[ zk
 nnoremap ]] zj
 autocmd FileType python setlocal foldmethod=indent
+autocmd FileType karel setlocal foldmethod=indent
 
 set number          " Show line numbers
 set showmatch       " Show matching parenthesis
@@ -68,7 +67,7 @@ set cindent         " Use C-indenting rules for C (probably set already)
 set cinoptions+=g0  " Don't indent access specifiers (public, private)
 
 if has("clipboard")
-    set clipboard=unnamed  " Copy to system clipboard
+    set clipboard+=unnamed  " Copy to system clipboard
     if has("unnamedplus")
         set clipboard+=unnamedplus
     endif
@@ -79,9 +78,6 @@ command SUw w !sudo tee "%" > /dev/null
 
 " Always open terminals in current window
 command Term terminal ++curwin
-
-" Make escape work in terminal mode
-tnoremap <Esc> <C-\><C-n>
 
 " Use ; as an alias for : (skip the shift)
 nnoremap ; :
@@ -108,12 +104,9 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " }}} BEHAVIOUR "
 
 " APPEARANCE {{{ "
-" Color theme
-colorscheme molokai
-
-" Highlight all tabs and trailing whitespace characters.
+" Highlight trailing whitespace characters.
 highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$\|\t/
+match ExtraWhitespace /\s\+$/
 
 " Use actual truecolor colors if available
 if has("termguicolors")
@@ -137,12 +130,22 @@ set laststatus=2
 " }}} "
 
 " PLUGINS {{{
+source ~/.vimrc_plugins     " Loads plugins, this is in a separate file because the different plugin loaders are used on different systems
+
+" Color theme
+colorscheme molokai
+
+" CamelCaseMotion
+let g:camelcasemotion_key = '<leader>'
 
 " FZF
 let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 
 nmap <leader>* :Ag <C-r><C-w><CR>
 nmap <leader>/ :Ag<CR>
+
+" vimagit
+map <C-m> :Magit<CR>
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>  " Use Ctrl^n to toggle NERDTree
@@ -153,15 +156,33 @@ let NERDTreeMapOpenRecursively="<S-Tab>"
 let g:auto_save = 1                  " Enable auto saving be default
 let g:auto_save_in_insert_mode = 0   " Do not auto save in insert mode
 let g:auto_save_silent = 1           " Do not display notification
+autocmd FileType magit let b:auto_save = 0
+
+"augroup ft_magit
+"  au!
+"  au FileType magit let b:auto_save = 0
+"augroup END
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr> <Tab>     pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab>   pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" language client
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ 'c': ['/snap/bin/ccls'],
+    \ 'cpp': ['/snap/bin/ccls'],
+    \ }
+
 " org-mode
 let g:org_heading_shade_leading_start = 0
 let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)', 'CANCELLED(c)', 'DELEGATED(g)']
+let g:org_heading_highlight_colors = ['Identifier', 'PreProc', 'Type', 'Number', 'String', 'Comment'] " These are all non bold/italic in molokai
+let g:org_heading_highlight_levels = 10
+let g:org_aggressive_conceal = 1
 
 nmap <localleader>cd <localleader>ddoCLOSED: <Esc><localleader>si
 nmap <localleader>cg <localleader>dgoCLOSED: <Esc><localleader>si

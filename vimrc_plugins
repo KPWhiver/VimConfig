@@ -12,13 +12,23 @@ call plug#begin()
 
 " Tools
 Plug 'scrooloose/nerdtree'                        " File explorer
-Plug 'albfan/nerdtree-git-plugin'
 Plug 'vim-scripts/vim-auto-save'		  " Auto saver
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-sleuth'
 Plug 'jceb/vim-orgmode'
 Plug 'sheerun/vim-polyglot'
+Plug 'onerobotics/vim-karel'
+Plug 'bkad/CamelCaseMotion'
+Plug 'jreybert/vimagit'
+Plug 'airblade/vim-gitgutter'
+Plug 'justinmk/vim-sneak'
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 Plug 'Shougo/deoplete.nvim'
 if !has('nvim')
