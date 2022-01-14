@@ -34,6 +34,7 @@
       environment.systemPackages = with pkgs; [
         silver-searcher
         fzf
+        wl-clipboard
       ];
     };
     nixosModule = self.nixosModules.vim;
