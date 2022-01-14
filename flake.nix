@@ -1,0 +1,41 @@
+{
+  outputs = {self, nixpkgs}: {
+    nixosModules.vim = { pkgs, ... }: {
+      programs.neovim = {
+        enable = true;
+        vimAlias = true;
+        viAlias = true;
+        defaultEditor = true;
+        configure = {
+          customRC = builtins.replaceStrings ["source ~/.vimrc_plugins"] [""] (builtins.readFile ./vimrc);
+          packages.myVimPackage = with pkgs.vimPlugins; {
+            start = [ 
+              nerdtree
+              nerdtree-git-plugin
+              molokai
+              vim-auto-save
+              LanguageClient-neovim
+              deoplete-nvim
+              fzfWrapper
+              fzf-vim
+              vim-orgmode
+              vim-speeddating
+              vim-polyglot
+              vim-sleuth
+              camelcasemotion
+              vimagit
+              vim-gitgutter
+              vim-sneak
+            ];
+          };
+        };
+      };
+
+      environment.systemPackages = with pkgs; [
+        silver-searcher
+        fzf
+      ];
+    };
+    nixosModule = self.nixosModules.vim;
+  };
+}
