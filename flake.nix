@@ -7,7 +7,7 @@
         viAlias = true;
         defaultEditor = true;
         configure = {
-          customRC = builtins.replaceStrings ["source ~/.vimrc_plugins"] [""] (builtins.readFile ./vimrc);
+          customRC = builtins.replaceStrings ["source ~/.config/nvim/vimrc_plugins"] [""] (builtins.readFile ./vimrc);
           packages.myVimPackage = with pkgs.vimPlugins; {
             start = [ 
               nerdtree

@@ -130,7 +130,7 @@ set laststatus=2
 " }}} "
 
 " PLUGINS {{{
-source ~/.vimrc_plugins     " Loads plugins, this is in a separate file because the different plugin loaders are used on different systems
+source ~/.config/nvim/vimrc_plugins     " Loads plugins, this is in a separate file because the different plugin loaders are used on different systems
 
 " Color theme
 colorscheme molokai
