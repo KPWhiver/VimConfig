@@ -5,7 +5,7 @@
 set hidden
 
 " Set leaders
-" Potential leaders: , - + <space> \ ` @ <cr> 
+" Potential leaders: , - + <space> \ ` @ <cr>
 let mapleader=" "
 let maplocalleader=","
 nnoremap <space> <nop>
@@ -104,9 +104,19 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " }}} BEHAVIOUR "
 
 " APPEARANCE {{{ "
-" Highlight trailing whitespace characters.
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
+function! MyHighlights() abort
+    highlight Normal guibg=none ctermbg=none
+
+    " Highlight trailing whitespace characters.
+    highlight ExtraWhitespace ctermbg=red guibg=red
+    match ExtraWhitespace /\s\+$/
+endfunction
+
+augroup MyColors
+    autocmd!
+    autocmd ColorScheme * call MyHighlights()
+augroup END
+
 
 " Use actual truecolor colors if available
 if has("termguicolors")
