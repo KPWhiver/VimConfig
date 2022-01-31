@@ -9,7 +9,7 @@
         configure = {
           customRC = builtins.replaceStrings ["source ~/.config/nvim/vimrc_plugins"] [""] (builtins.readFile ./vimrc);
           packages.myVimPackage = with pkgs.vimPlugins; {
-            start = [ 
+            start = [
               nerdtree
               nerdtree-git-plugin
               molokai
@@ -25,6 +25,7 @@
               camelcasemotion
               vimagit
               vim-gitgutter
+              vim-fugitive
               vim-sneak
             ];
           };

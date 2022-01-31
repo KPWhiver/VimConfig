@@ -173,6 +173,15 @@ autocmd FileType magit let b:auto_save = 0
 "  au FileType magit let b:auto_save = 0
 "augroup END
 
+" GitGutter
+nmap gn <Plug>(GitGutterNextHunk)    " git next
+nmap gp <Plug>(GitGutterPrevHunk)    " git previous
+
+nmap gd <Plug>(GitGutterPreviewHunk) " git diff
+
+nmap ga <Plug>(GitGutterStageHunk)   " git add (chunk)
+nmap gu <Plug>(GitGutterUndoHunk)    " git undo (chunk)
+
 " deoplete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr> <Tab>     pumvisible() ? "\<C-n>" : "\<Tab>"

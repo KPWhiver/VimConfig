@@ -22,6 +22,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'onerobotics/vim-karel'
 Plug 'bkad/CamelCaseMotion'
 Plug 'jreybert/vimagit'
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'justinmk/vim-sneak'
 
