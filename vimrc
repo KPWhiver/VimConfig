@@ -36,7 +36,9 @@ set ttimeoutlen=50    " Less delay when switching modes
 " Misc configs
 set backspace=indent,eol,start " Allow backspacing over everything in insert mode
 
-set foldmethod=syntax
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+"set foldmethod=syntax
 set foldtext=getline(v:foldstart)
 set foldlevel=1
 nnoremap [[ zk
@@ -182,20 +184,6 @@ nmap gd <Plug>(GitGutterPreviewHunk) " git diff
 nmap ga <Plug>(GitGutterStageHunk)   " git add (chunk)
 nmap gu <Plug>(GitGutterUndoHunk)    " git undo (chunk)
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr> <Tab>     pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab>   pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" language client
-set hidden
-
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ 'c': ['/snap/bin/ccls'],
-    \ 'cpp': ['/snap/bin/ccls'],
-    \ }
-
 " org-mode
 let g:org_heading_shade_leading_start = 0
 let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)', 'CANCELLED(c)', 'DELEGATED(g)']
@@ -212,5 +200,25 @@ nmap <localleader>cb <localleader>db
 nmap <localleader>c<Left> @<Plug>OrgTodoToggleNonInteractive
 nmap <localleader><Tab> @<Plug>OrgToggleFoldingNormal
 nmap <localleader><S-Tab> @<Plug>OrgToggleFoldingReverse
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    custom_captures = {
+      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+      ["foo.bar"] = "Identifier",
+    },
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+  indent = {
+    enable = true
+  }
+}
+EOF
 " }}} "
 

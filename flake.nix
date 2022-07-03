@@ -14,8 +14,6 @@
               nerdtree-git-plugin
               molokai
               vim-auto-save
-              LanguageClient-neovim
-              deoplete-nvim
               fzfWrapper
               fzf-vim
               vim-orgmode
