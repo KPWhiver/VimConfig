@@ -1,6 +1,16 @@
 {
   outputs = {self, nixpkgs}: {
-    nixosModules.vim = { pkgs, ... }: {
+    nixosModules.vim = { pkgs, ... }: let
+      vim-karel = pkgs.vimUtils.buildVimPlugin {
+        name = "vim-karel";
+        src = pkgs.fetchFromGitHub {
+          owner = "onerobotics";
+          repo = "vim-karel";
+          rev = "master";
+          sha256 = "Dw+/LRUlOhX7Bl4FFAFRVExp1O7hTliUXS1cBPXg5BE=";
+        };
+      };
+    in {
       programs.neovim = {
         enable = true;
         vimAlias = true;
@@ -27,6 +37,7 @@
               vim-gitgutter
               vim-fugitive
               vim-sneak
+              vim-karel
             ];
           };
         };
