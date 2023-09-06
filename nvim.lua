@@ -36,7 +36,7 @@ vim.opt.ttimeoutlen = 50    -- Less delay when switching modes
 -- Misc configs
 vim.opt.backspace = { 'indent', 'eol', 'start' } -- Allow backspacing over everything in insert mode
 
-vim.opt.foldmethod = 'syntax'
+--vim.opt.foldmethod = 'syntax'
 vim.opt.foldlevel = 1
 vim.api.nvim_set_keymap("n", "[[", "zk", { noremap = true })
 vim.api.nvim_set_keymap("n", "]]", "zj", { noremap = true })
@@ -46,7 +46,7 @@ vim.opt.showmatch = true      -- Show matching parenthesis
 vim.opt.autoindent = true     -- Always autoindent
 vim.opt.copyindent = true     -- Copy the previous indentation on autoindenting
 
-vim.opt.expandtabs = true     -- Use spaces instead of tabs
+vim.opt.expandtab = true     -- Use spaces instead of tabs
 vim.opt.tabstop = 4           -- Tab width = 4 spaces
 vim.opt.shiftwidth = 4        -- Number of spaces to use for autoindenting
 vim.opt.softtabstop = 4       -- When backspacing, treat spaces like tabs, clear 4 spaces per backspace
@@ -55,7 +55,11 @@ vim.opt.smarttab = true       -- Use shiftwidth at start of lines instead of tab
 
 -- Load old style vim
 vim.cmd([[
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
 set foldtext=getline(v:foldstart)
+
 autocmd FileType python setlocal foldmethod=indent
 autocmd FileType karel setlocal foldmethod=indent
 
@@ -174,16 +178,61 @@ nmap gd <Plug>(GitGutterPreviewHunk) " git diff
 
 nmap ga <Plug>(GitGutterStageHunk)   " git add (chunk)
 nmap gu <Plug>(GitGutterUndoHunk)    " git undo (chunk)
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr> <Tab>     pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab>   pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " }}} "
 ]])
 
-vim.lsp.start({
-  name = 'clangd',
-  cmd = {'clangd'},
-  root_dir = vim.fs.dirname(vim.fs.find({'CMakeLists.txt'}, { upward = true })[1]),
-})
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+  indent = {
+    enable = true
+  }
+}
+
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+local lspconfig = require('lspconfig')
+lspconfig.clangd.setup{ capabilities = capabilities }
+lspconfig.nil_ls.setup{ capabilities = capabilities }
+
+local cmp = require 'cmp'
+cmp.setup {
+  mapping = cmp.mapping.preset.insert({
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
+    ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
+    -- C-b (back) C-f (forward) for snippet placeholder navigation.
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'treesitter' },
+  },
+}

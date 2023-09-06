@@ -22,21 +22,35 @@
           '';
           packages.myVimPackage = with pkgs.vimPlugins; {
             start = [
-              nerdtree
-              nerdtree-git-plugin
-              molokai
-              vim-auto-save
-              deoplete-nvim
-              fzfWrapper
-              fzf-vim
-              vim-speeddating
-              vim-polyglot
-              vim-sleuth
-              camelcasemotion
-              vim-gitgutter
-              vim-fugitive
-              vim-sneak
-              vim-karel
+              nerdtree nerdtree-git-plugin    # File browser
+              molokai                         # Theme
+              vim-auto-save                   # Auto save
+              fzfWrapper fzf-vim              # File/text searching
+              vim-polyglot                    # Syntax highlighting
+              vim-sleuth                      # Auto tab size
+              camelcasemotion                 # Subname motions
+              vim-gitgutter                   # Git info line numbers
+              vim-fugitive                    # Git commands
+              vim-karel                       # Karel syntax highlighting
+              nvim-lspconfig cmp-nvim-lsp     # Easy LSP setup
+              nvim-cmp                        # Autocompletion
+              cmp-treesitter
+              (nvim-treesitter.withPlugins (  # Syntax highlighting
+                plugins: with plugins; [
+                  tree-sitter-nix
+                  tree-sitter-python
+                  tree-sitter-c
+                  tree-sitter-cpp
+                  tree-sitter-cpp
+                  tree-sitter-json
+                  tree-sitter-bash
+                  tree-sitter-toml
+                  tree-sitter-make
+                  tree-sitter-yaml
+                  tree-sitter-vim
+                  tree-sitter-cmake
+                ]
+              ))
             ];
           };
         };
@@ -46,6 +60,7 @@
         silver-searcher
         fzf
         wl-clipboard
+        nil
       ];
     };
     nixosModule = self.nixosModules.vim;
