@@ -1,59 +1,63 @@
-" BEHAVIOUR {{{ "
-" Hide buffers instead of closing them
-" Absolutely essential since this allows multiple
-" files to be open at the same time.
-set hidden
+-- BEHAVIOUR
+-- Hide buffers instead of closing them
+-- Absolutely essential since this allows multiple
+-- files to be open at the same time.
+vim.opt.hidden = true
 
-" Set leaders
-" Potential leaders: , - + <space> \ ` @ <cr>
-let mapleader=" "
-let maplocalleader=","
-nnoremap <space> <nop>
-nnoremap , <nop>
+-- Set leaders
+-- Potential leaders: , - + <space> \ ` @ <cr>
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+vim.api.nvim_set_keymap("n", "<space>", "<nop>", { noremap = true })
+vim.api.nvim_set_keymap("n", ",", "<nop>", { noremap = true })
 
-" Enable mouse control, nice to have sometimes
-set mouse=a
+-- Enable mouse control, nice to have sometimes
+vim.opt.mouse = "a"
 
-" Bash-like command completion
-" First tab completes as much as possible
-" Second tab shows a list of possible completions
-set wildmode=longest,list,full
-set wildmenu
+-- Bash-like command completion
+-- First tab completes as much as possible
+-- Second tab shows a list of possible completions
+vim.opt.wildmode = { 'longest', 'list', 'full' }
+vim.opt.wildmenu = true
 
-" A lot of history
-set history=1000
-set undolevels=1000
-set undodir=~/.vim/undodir
-set undofile
+-- A lot of history
+vim.opt.history = 1000
+vim.opt.undolevels = 1000
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
 
-" Don't make temporary/backup files
-set nobackup
-set noswapfile
+-- Don't make temporary/backup files
+vim.opt.backup = false
+vim.opt.swapfile = false
 
-" Airline config
-set ttimeoutlen=50    " Less delay when switching modes
+-- Airline config
+vim.opt.ttimeoutlen = 50    -- Less delay when switching modes
 
-" Misc configs
-set backspace=indent,eol,start " Allow backspacing over everything in insert mode
+-- Misc configs
+vim.opt.backspace = { 'indent', 'eol', 'start' } -- Allow backspacing over everything in insert mode
 
-set foldmethod=syntax
-set foldlevel=1
-nnoremap [[ zk
-nnoremap ]] zj
+vim.opt.foldmethod = 'syntax'
+vim.opt.foldlevel = 1
+vim.api.nvim_set_keymap("n", "[[", "zk", { noremap = true })
+vim.api.nvim_set_keymap("n", "]]", "zj", { noremap = true })
+
+vim.opt.number = true         -- Show line numbers
+vim.opt.showmatch = true      -- Show matching parenthesis
+vim.opt.autoindent = true     -- Always autoindent
+vim.opt.copyindent = true     -- Copy the previous indentation on autoindenting
+
+vim.opt.expandtabs = true     -- Use spaces instead of tabs
+vim.opt.tabstop = 4           -- Tab width = 4 spaces
+vim.opt.shiftwidth = 4        -- Number of spaces to use for autoindenting
+vim.opt.softtabstop = 4       -- When backspacing, treat spaces like tabs, clear 4 spaces per backspace
+vim.opt.shiftround = true     -- Indent to to nearest multiple of shiftwidth when using << and >>
+vim.opt.smarttab = true       -- Use shiftwidth at start of lines instead of tabstop
+
+-- Load old style vim
+vim.cmd([[
+set foldtext=getline(v:foldstart)
 autocmd FileType python setlocal foldmethod=indent
 autocmd FileType karel setlocal foldmethod=indent
-
-set number          " Show line numbers
-set showmatch       " Show matching parenthesis
-set autoindent      " Always autoindent
-set copyindent      " Copy the previous indentation on autoindenting
-
-set expandtab       " Use spaces instead of tabs
-set tabstop=4       " Tab width = 4 spaces
-set shiftwidth=4    " Number of spaces to use for autoindenting
-set softtabstop=4   " When backspacing, treat spaces like tabs, clear 4 spaces per backspace
-set shiftround      " Indent to to nearest multiple of shiftwidth when using << and >>
-set smarttab        " Use shiftwidth at start of lines instead of tabstop
 
 set ignorecase      " Case insensitive searching
 if exists("&wildignorecase")
@@ -139,8 +143,6 @@ set laststatus=2
 " }}} "
 
 " PLUGINS {{{
-source ~/.config/nvim/vimrc_plugins     " Loads plugins, this is in a separate file because the different plugin loaders are used on different systems
-
 " Color theme
 colorscheme molokai
 
@@ -153,9 +155,6 @@ let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 nmap <leader>* :Ag <C-r><C-w><CR>
 nmap <leader>/ :Ag<CR>
 
-" vimagit
-map <C-m> :Magit<CR>
-
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>  " Use Ctrl^n to toggle NERDTree
 let NERDTreeMapActivateNode="<Tab>"
@@ -166,11 +165,6 @@ let g:auto_save = 1                  " Enable auto saving be default
 let g:auto_save_in_insert_mode = 0   " Do not auto save in insert mode
 let g:auto_save_silent = 1           " Do not display notification
 autocmd FileType magit let b:auto_save = 0
-
-"augroup ft_magit
-"  au!
-"  au FileType magit let b:auto_save = 0
-"augroup END
 
 " GitGutter
 nmap gn <Plug>(GitGutterNextHunk)    " git next
@@ -185,25 +179,11 @@ nmap gu <Plug>(GitGutterUndoHunk)    " git undo (chunk)
 let g:deoplete#enable_at_startup = 1
 inoremap <expr> <Tab>     pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab>   pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" language client
-set hidden
-
-" org-mode
-let g:org_heading_shade_leading_start = 0
-let g:org_todo_keywords = ['BLOCKED(b)', 'TODO(t)', 'WAITING(w)', '|', 'DONE(d)', 'CANCELLED(c)', 'DELEGATED(g)']
-let g:org_heading_highlight_colors = ['Identifier', 'PreProc', 'Type', 'Number', 'String', 'Comment'] " These are all non bold/italic in molokai
-let g:org_heading_highlight_levels = 10
-let g:org_aggressive_conceal = 1
-
-nmap <localleader>cd <localleader>ddoCLOSED: <Esc><localleader>si
-nmap <localleader>cg <localleader>dgoCLOSED: <Esc><localleader>si
-nmap <localleader>cc <localleader>dcoCLOSED: <Esc><localleader>si
-nmap <localleader>ct <localleader>dt
-nmap <localleader>cw <localleader>dw
-nmap <localleader>cb <localleader>db
-nmap <localleader>c<Left> @<Plug>OrgTodoToggleNonInteractive
-nmap <localleader><Tab> @<Plug>OrgToggleFoldingNormal
-nmap <localleader><S-Tab> @<Plug>OrgToggleFoldingReverse
 " }}} "
+]])
 
+vim.lsp.start({
+  name = 'clangd',
+  cmd = {'clangd'},
+  root_dir = vim.fs.dirname(vim.fs.find({'CMakeLists.txt'}, { upward = true })[1]),
+})

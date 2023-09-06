@@ -17,23 +17,22 @@
         viAlias = true;
         defaultEditor = true;
         configure = {
-          customRC = builtins.replaceStrings ["source ~/.config/nvim/vimrc_plugins"] [""] (builtins.readFile ./vimrc);
+          customRC = ''
+            luafile ${./nvim.lua}
+          '';
           packages.myVimPackage = with pkgs.vimPlugins; {
             start = [
               nerdtree
               nerdtree-git-plugin
               molokai
               vim-auto-save
-              LanguageClient-neovim
               deoplete-nvim
               fzfWrapper
               fzf-vim
-              vim-orgmode
               vim-speeddating
               vim-polyglot
               vim-sleuth
               camelcasemotion
-              vimagit
               vim-gitgutter
               vim-fugitive
               vim-sneak
