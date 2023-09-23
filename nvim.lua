@@ -36,8 +36,13 @@ vim.opt.ttimeoutlen = 50    -- Less delay when switching modes
 -- Misc configs
 vim.opt.backspace = { 'indent', 'eol', 'start' } -- Allow backspacing over everything in insert mode
 
---vim.opt.foldmethod = 'syntax'
 vim.opt.foldlevel = 1
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldtext = 'getline(v:foldstart)'
+vim.cmd('set nofoldenable')
+vim.api.nvim_set_keymap("n", "<Tab>", "za", {noremap = true })
+vim.api.nvim_set_keymap("n", "<S-Tab>", "z0", {noremap = true })
 vim.api.nvim_set_keymap("n", "[[", "zk", { noremap = true })
 vim.api.nvim_set_keymap("n", "]]", "zj", { noremap = true })
 
@@ -53,55 +58,29 @@ vim.opt.softtabstop = 4       -- When backspacing, treat spaces like tabs, clear
 vim.opt.shiftround = true     -- Indent to to nearest multiple of shiftwidth when using << and >>
 vim.opt.smarttab = true       -- Use shiftwidth at start of lines instead of tabstop
 
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.wildignorecase = true -- Case insensitive filename completion
+
+vim.opt.cindent = true    -- Use C-indenting rules for C (probably set already
+vim.opt.cinoptions = 'g0' -- Don't indent access specifiers (public, private)
+
+vim.opt.clipboard = "unnamedplus" -- Copy to system clipboard
+
+vim.api.nvim_set_keymap("n", ";", ":", {noremap = true })
+vim.api.nvim_set_keymap("i", "<C-w>", "<Esc><C-w>", {})
+
+vim.api.nvim_set_keymap("n", "<C-f>", ":FZF<CR>", {})
+vim.api.nvim_set_keymap("i", "<C-f>", "<Esc> :FZF<CR>", {})
+
 -- Load old style vim
 vim.cmd([[
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable
-set foldtext=getline(v:foldstart)
-
 autocmd FileType python setlocal foldmethod=indent
 autocmd FileType karel setlocal foldmethod=indent
 
-set ignorecase      " Case insensitive searching
-if exists("&wildignorecase")
-    set wildignorecase " Case insensitive filename completion (i.e. in :e)
-endif
-set hlsearch        " Highlight search terms
-set incsearch       " Show search matches as you type
-
-set cindent         " Use C-indenting rules for C (probably set already)
-set cinoptions+=g0  " Don't indent access specifiers (public, private)
-
-if has("clipboard")
-    set clipboard+=unnamed  " Copy to system clipboard
-    if has("unnamedplus")
-        set clipboard+=unnamedplus
-    endif
-endif
-
 " Write file using sudo
 command SUw w !sudo tee "%" > /dev/null
-
-" Always open terminals in current window
-command Term terminal ++curwin
-
-" Use ; as an alias for : (skip the shift)
-nnoremap ; :
-
-" Use tab as the fold cycle key
-nnoremap <Tab> za
-nnoremap <S-Tab> zO
-
-" Quickly get out of insert mode without reaching for escape
-inoremap jj <Esc>
-
-" Allow usage of CTRL W in insert mode
-imap <C-w> <Esc><C-w>
-
-" Use CTRL F and to find files
-map <C-f> :FZF<CR>
-imap <C-f> <Esc> :FZF<CR>
 
 " Change the cursor based on the mode (only works in konsole)
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -171,13 +150,13 @@ let g:auto_save_silent = 1           " Do not display notification
 autocmd FileType magit let b:auto_save = 0
 
 " GitGutter
-nmap gn <Plug>(GitGutterNextHunk)    " git next
-nmap gp <Plug>(GitGutterPrevHunk)    " git previous
+nmap +n <Plug>(GitGutterNextHunk)    " git next
+nmap +p <Plug>(GitGutterPrevHunk)    " git previous
 
-nmap gd <Plug>(GitGutterPreviewHunk) " git diff
+nmap +d <Plug>(GitGutterPreviewHunk) " git diff
 
-nmap ga <Plug>(GitGutterStageHunk)   " git add (chunk)
-nmap gu <Plug>(GitGutterUndoHunk)    " git undo (chunk)
+nmap +a <Plug>(GitGutterStageHunk)   " git add (chunk)
+nmap +u <Plug>(GitGutterUndoHunk)    " git undo (chunk)
 " }}} "
 ]])
 
@@ -195,13 +174,61 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local sign = function(opts)
+  vim.fn.sign_define(opts.name, {
+    texthl = opts.name,
+    text = opts.text,
+    numhl = ''
+  })
+end
+
+sign({name = 'DiagnosticSignError', text = '✘'})
+sign({name = 'DiagnosticSignWarn', text = '▲'})
+sign({name = 'DiagnosticSignHint', text = '⚑'})
+sign({name = 'DiagnosticSignInfo', text = ''})
 
 local lspconfig = require('lspconfig')
-lspconfig.clangd.setup{ capabilities = capabilities }
-lspconfig.nil_ls.setup{ capabilities = capabilities }
+local lsp_defaults = lspconfig.util.default_config
+lsp_defaults.capabilities = vim.tbl_deep_extend(
+  'force',
+  lsp_defaults.capabilities,
+  require('cmp_nvim_lsp').default_capabilities()
+)
 
-local cmp = require 'cmp'
+lspconfig.clangd.setup{}
+lspconfig.lua_ls.setup{ single_file_support = true }
+lspconfig.nil_ls.setup{}
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function()
+    --require('clangd_extensions.inlay_hints').setup_autocmd()
+    --require('clangd_extensions.inlay_hints').set_inlay_hints()
+
+    local opts = { buffer = true }
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
+    --vim.keymap.set('n', '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>')
+    --vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>')
+    --vim.keymap.set('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
+    vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
+    vim.keymap.set('n', '<S-Tab>', vim.diagnostic.goto_prev, opts)
+    vim.keymap.set('n', '<Tab>', vim.diagnostic.goto_next, opts)
+    vim.keymap.set('n', 'gf', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
+
+local cmp = require('cmp')
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
     ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
@@ -231,8 +258,28 @@ cmp.setup {
       end
     end, { 'i', 's' }),
   }),
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.recently_used,
+      require("clangd_extensions.cmp_scores"),
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
+  window = {
+    documentation = cmp.config.window.bordered()
+  },
+  formatting = {
+    fields = {'menu', 'abbr', 'kind'}
+  },
   sources = {
     { name = 'nvim_lsp' },
     { name = 'treesitter' },
+    { name = 'path' },
+    { name = 'buffer' },
   },
 }
