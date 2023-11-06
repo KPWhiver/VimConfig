@@ -10,6 +10,15 @@
           sha256 = "Dw+/LRUlOhX7Bl4FFAFRVExp1O7hTliUXS1cBPXg5BE=";
         };
       };
+      vim-monkey-c = pkgs.vimUtils.buildVimPlugin {
+        name = "vim-monkey-c";
+        src = pkgs.fetchFromGitHub {
+          owner = "klimeryk";
+          repo = "vim-monkey-c";
+          rev = "master";
+          sha256 = "DVSxJHNrNCxQJNRJqwo6hxLjx22Qe2mWHcmfhFmPTOg=";
+        };
+      };
     in {
       programs.neovim = {
         enable = true;
@@ -49,6 +58,7 @@
 
               nvim-treesitter.withAllGrammars  # Syntax highlighting
               vim-karel                        # Karel syntax highlighting
+              vim-monkey-c                     # monkey C syntax highlighting
               #vim-polyglot
               #(nvim-treesitter.withPlugins (
               #  plugins: with plugins; [
