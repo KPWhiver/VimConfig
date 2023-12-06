@@ -59,11 +59,15 @@
               nvim-lspconfig                  # Easy LSP setup
               clangd_extensions-nvim
 
+              luasnip                         # Snippets
+              friendly-snippets
+
               nvim-cmp                        # Autocompletion
               cmp-treesitter
               cmp-nvim-lsp
               cmp-path
               cmp-buffer
+              cmp_luasnip
 
               nvim-treesitter.withAllGrammars  # Syntax highlighting
               vim-karel                        # Karel syntax highlighting
@@ -79,6 +83,7 @@
         silver-searcher
         fzf
         wl-clipboard
+
         # LSPs
         nil
         clang-tools_16
