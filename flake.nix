@@ -10,6 +10,15 @@
           sha256 = "Dw+/LRUlOhX7Bl4FFAFRVExp1O7hTliUXS1cBPXg5BE=";
         };
       };
+      vim-tp = pkgs.vimUtils.buildVimPlugin {
+        name = "vim-tp";
+        src = pkgs.fetchFromGitHub {
+          owner = "onerobotics";
+          repo = "vim-tp";
+          rev = "master";
+          sha256 = "NmdBTOP7MWJis93J/0FzW2qgj7TYlteh0hBDOHiJF9g=";
+        };
+      };
       vim-monkey-c = pkgs.vimUtils.buildVimPlugin {
         name = "vim-monkey-c";
         src = pkgs.fetchFromGitHub {
@@ -58,6 +67,7 @@
 
               nvim-treesitter.withAllGrammars  # Syntax highlighting
               vim-karel                        # Karel syntax highlighting
+              vim-tp                           # TeachPendant syntax highlighting
               vim-monkey-c                     # monkey C syntax highlighting
               #vim-polyglot
               #(nvim-treesitter.withPlugins (
