@@ -196,8 +196,23 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
 )
 
 lspconfig.clangd.setup{}
-lspconfig.lua_ls.setup{ single_file_support = true }
+lspconfig.lua_ls.setup{}
 lspconfig.nil_ls.setup{}
+lspconfig.marksman.setup{}
+lspconfig.cmake.setup{}
+lspconfig.yamlls.setup{
+  settings = {
+    yaml = {
+      keyOrdering = false,
+    },
+  },
+}
+lspconfig.jsonls.setup{
+  cmd = { "vscode-json-languageserver", "--stdio" },
+}
+lspconfig.dockerls.setup{}
+lspconfig.bashls.setup{}
+lspconfig.pylsp.setup{}
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),

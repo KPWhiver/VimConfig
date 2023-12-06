@@ -69,33 +69,26 @@
               vim-karel                        # Karel syntax highlighting
               vim-tp                           # TeachPendant syntax highlighting
               vim-monkey-c                     # monkey C syntax highlighting
-              #vim-polyglot
-              #(nvim-treesitter.withPlugins (
-              #  plugins: with plugins; [
-              #    tree-sitter-nix
-              #    tree-sitter-python
-              #    tree-sitter-c
-              #    tree-sitter-cpp
-              #    tree-sitter-cpp
-              #    tree-sitter-json
-              #    tree-sitter-bash
-              #    tree-sitter-toml
-              #    tree-sitter-make
-              #    tree-sitter-yaml
-              #    tree-sitter-vim
-              #    tree-sitter-cmake
-              #  ]
-              #))
             ];
           };
         };
       };
 
       environment.systemPackages = with pkgs; [
+        # Utilities
         silver-searcher
         fzf
         wl-clipboard
+        # LSPs
         nil
+        clang-tools_16
+        marksman
+        cmake-language-server
+        nodePackages.dockerfile-language-server-nodejs
+        nodePackages.yaml-language-server
+        nodePackages.vscode-json-languageserver
+        nodePackages.bash-language-server
+        python3Packages.python-lsp-server
       ];
     };
     nixosModule = self.nixosModules.vim;
