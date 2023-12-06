@@ -74,6 +74,11 @@ vim.api.nvim_set_keymap("i", "<C-w>", "<Esc><C-w>", {})
 vim.api.nvim_set_keymap("n", "<C-f>", ":FZF<CR>", {})
 vim.api.nvim_set_keymap("i", "<C-f>", "<Esc> :FZF<CR>", {})
 
+-- Format using =
+vim.api.nvim_set_keymap("n", "=", "gq", {noremap = true })
+vim.api.nvim_set_keymap("n", "==", "gqq", {noremap = true })
+vim.api.nvim_set_keymap("v", "=", "gq", {noremap = true })
+
 -- Load old style vim
 vim.cmd([[
 autocmd FileType python setlocal foldmethod=indent
@@ -230,15 +235,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
-    --vim.keymap.set('n', '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>')
     --vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>')
     --vim.keymap.set('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
     vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
     vim.keymap.set('n', '<S-Tab>', vim.diagnostic.goto_prev, opts)
     vim.keymap.set('n', '<Tab>', vim.diagnostic.goto_next, opts)
-    vim.keymap.set('n', 'gf', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
   end,
 })
 
