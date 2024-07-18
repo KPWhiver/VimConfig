@@ -87,6 +87,10 @@
 
         # LSPs
         nil
+        rust-analyzer
+        rustfmt
+        rustc
+        cargo
         clang-tools_16
         marksman
         cmake-language-server
