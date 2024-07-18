@@ -70,6 +70,7 @@
               cmp_luasnip
 
               nvim-treesitter.withAllGrammars  # Syntax highlighting
+              nvim-treesitter-context          # Context viewing
               vim-karel                        # Karel syntax highlighting
               vim-tp                           # TeachPendant syntax highlighting
               vim-monkey-c                     # monkey C syntax highlighting
