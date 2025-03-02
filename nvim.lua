@@ -67,6 +67,17 @@ vim.opt.cindent = true    -- Use C-indenting rules for C (probably set already
 vim.opt.cinoptions = 'g0' -- Don't indent access specifiers (public, private)
 
 vim.opt.clipboard = "unnamedplus" -- Copy to system clipboard
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+}
 
 vim.api.nvim_set_keymap("n", ";", ":", {noremap = true })
 vim.api.nvim_set_keymap("i", "<C-w>", "<Esc><C-w>", {})
