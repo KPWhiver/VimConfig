@@ -22,35 +22,55 @@
           '';
           packages.myVimPackage = with pkgs.vimPlugins; {
             start = [
-              nerdtree                        # File browser
-              nerdtree-git-plugin
+              # File browser
+              nvim-tree-lua
+              nvim-web-devicons
 
-              molokai                         # Theme
+              # Status line
+              lualine-nvim
 
-              auto-save-nvim                  # Auto save
+              # Themes
+              monokai-pro-nvim
 
-              fzfWrapper fzf-vim              # File/text searching
+              # Indentation
+              indent-blankline-nvim
+              guess-indent-nvim
 
-              vim-sleuth                      # Auto tab size
+              # Auto save
+              auto-save-nvim
 
-              camelcasemotion                 # Subname motions
+              # File/search
+              telescope-nvim
+              telescope-fzf-native-nvim
+              remote-sshfs-nvim
 
-              vim-gitgutter                   # Git info line numbers
-              vim-fugitive                    # Git commands
+              # Motion
+              camelcasemotion
 
-              nvim-lspconfig                  # Easy LSP setup
+              # Git
+              gitsigns-nvim
+
+              # LSP
+              nvim-lspconfig
               clangd_extensions-nvim
 
-              luasnip                         # Snippets
+              # Autopairs
+              # TODO
+              #nvim-autopairs
+
+              # Snippets
+              luasnip
               friendly-snippets
 
-              nvim-cmp                        # Autocompletion
+              # Autocompletion
+              nvim-cmp
               cmp-treesitter
               cmp-nvim-lsp
               cmp-path
               cmp-buffer
               cmp_luasnip
 
+              # Syntax highlighting
               nvim-treesitter.withAllGrammars  # Syntax highlighting
               nvim-treesitter-context          # Context viewing
               vim-monkey-c                     # monkey C syntax highlighting
@@ -61,8 +81,7 @@
 
       environment.systemPackages = with pkgs; [
         # Utilities
-        silver-searcher
-        fzf
+        ripgrep
         wl-clipboard
 
         # LSPs
