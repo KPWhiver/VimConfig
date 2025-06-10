@@ -96,7 +96,7 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Down>'] = cmp.mapping(function(fallback)
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -243,7 +243,8 @@ vim.keymap.set("v", "=", "gq", { noremap = true })
 
 -- Motion
 vim.keymap.set("n", "<BS>", "<C-o>")
-vim.keymap.set("n", "<S-Del>", "<C-i>")     -- Shift Backspace (send by foot)
+vim.keymap.set("n", "<S-Del>", "<C-i>")  -- Shift Backspace (send by foot)
+vim.keymap.set("i", "<S-Del>", "<BS>")   -- Shift Backspace (send by foot)
 
 -- Write file using sudo
 vim.api.nvim_create_user_command('SUw', 'w !sudo -S tee "%" > /dev/null', {})
