@@ -284,6 +284,26 @@ gitsigns.setup({
     end)
   end
 })
+require('toggleterm').setup({
+  shade_terminals = false,
+  direction = 'float',
+  float_opts = {
+    border = {''},
+  },
+  highlights = {
+    NormalFloat = {
+      link = "NormalFloat",
+    },
+  },
+})
+local Terminal = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new({
+  cmd = 'lazygit',
+  hidden = true,
+})
+vim.keymap.set('n', '<C-g>', function()
+  lazygit:toggle()
+end)
 
 -- Telescope
 local telescope = require('telescope')

@@ -43,6 +43,7 @@
               telescope-nvim
               telescope-fzf-native-nvim
               remote-sshfs-nvim
+              toggleterm-nvim
 
               # Motion
               camelcasemotion
