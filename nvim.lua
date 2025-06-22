@@ -350,11 +350,6 @@ augroup END
 let g:camelcasemotion_key = '<leader>'
 ]])
 
--- Status line
-require('lualine').setup({
-  options = { theme = 'monokai-pro' }
-})
-
 -- Theme
 require('monokai-pro').setup({
   transparent_background = true,
@@ -372,3 +367,9 @@ require('monokai-pro').setup({
   end,
 })
 vim.cmd.colorscheme 'monokai-pro'
+
+-- Status line
+require('lualine').setup({
+  options = { theme = 'monokai-pro' }
+})
+
