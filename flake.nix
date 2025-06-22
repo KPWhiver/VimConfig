@@ -93,6 +93,7 @@
         cargo
         clang-tools_16
         marksman
+        mesonlsp
         cmake-language-server
         lua-language-server
         nodePackages.dockerfile-language-server-nodejs

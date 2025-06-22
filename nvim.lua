@@ -41,6 +41,7 @@ vim.lsp.enable({
   'clangd',
   'nil_ls',
   'marksman',
+  'mesonlsp',
   'cmake',
   'yamlls',
   'jsonls',
