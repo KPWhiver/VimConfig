@@ -62,6 +62,12 @@ vim.lsp.config('yamlls', {
 vim.lsp.config('jsonls', {
   cmd = { "vscode-json-languageserver", "--stdio" },
 })
+vim.diagnostic.config({ jump = {
+  on_jump = function(diagnostic, _)
+    if not diagnostic then return end
+    vim.diagnostic.open_float({ source = true })
+  end,
+}})
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
 --   callback = function(ev)
