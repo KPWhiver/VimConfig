@@ -299,7 +299,7 @@ require('toggleterm').setup({
   },
   highlights = {
     NormalFloat = {
-      link = "NormalFloat",
+      link = "TelescopeNormal",
     },
   },
 })
@@ -308,7 +308,7 @@ local lazygit = Terminal:new({
   cmd = 'lazygit',
   hidden = true,
 })
-vim.keymap.set('n', '<C-g>', function()
+vim.keymap.set('n', '<leader>-', function()
   lazygit:toggle()
 end)
 
@@ -362,9 +362,6 @@ require('monokai-pro').setup({
   devicons = true,
   background_clear = {},
   filter = 'octagon',
-  -- indent_blankline = {
-  --   context_highlight = "pro",
-  -- },
   override = function(c)
     return {
       IblIndent = { fg = c.base.gray },
