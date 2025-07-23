@@ -174,16 +174,18 @@ vim.opt.ttimeoutlen = 50    -- Less delay when switching modes
 -- Misc configs
 vim.opt.backspace = { 'indent', 'eol', 'start' } -- Allow backspacing over everything in insert mode
 
-vim.opt.foldlevel = 1
+vim.opt.foldlevel = 20
+vim.opt.foldlevelstart = 1
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-vim.opt.foldtext = 'getline(v:foldstart)'
+vim.opt.foldtext = ''
+vim.opt.foldnestmax = 4
 vim.keymap.set("n", "<Tab>", "za", {noremap = true })
 vim.keymap.set("n", "<S-Tab>", "zA", {noremap = true })
-vim.keymap.set("n", "<D-Tab>", "zj", { noremap = true })
-vim.keymap.set("v", "<D-Tab>", "zj", { noremap = true })
-vim.keymap.set("n", "<D-S-Tab>", "zk", { noremap = true })
-vim.keymap.set("v", "<D-S-Tab>", "zk", { noremap = true })
+vim.keymap.set("n", "]<Tab>", "zj", { noremap = true })
+vim.keymap.set("v", "]<Tab>", "zj", { noremap = true })
+vim.keymap.set("n", "[<Tab>", "zk", { noremap = true })
+vim.keymap.set("v", "[<Tab>", "zk", { noremap = true })
 
 -- Visual cues
 local sign = function(opts)
