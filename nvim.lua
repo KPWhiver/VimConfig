@@ -11,7 +11,6 @@ local file_browser = require('nvim-tree.api')
 require('nvim-tree').setup({
   on_attach = function (bufnr)
     file_browser.config.mappings.default_on_attach(bufnr)
-    vim.keymap.set('n', 'y', file_browser.fs.copy.node)
     vim.keymap.set('n', 'I', file_browser.tree.toggle_gitignore_filter)
     vim.keymap.set('n', 'H', file_browser.tree.toggle_hidden_filter)
     vim.keymap.set('n', '<BS>', file_browser.node.navigate.parent)
