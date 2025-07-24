@@ -44,6 +44,7 @@
               telescope-fzf-native-nvim
               remote-sshfs-nvim
               toggleterm-nvim
+              trouble-nvim
 
               # Motion
               camelcasemotion
@@ -54,6 +55,7 @@
               # LSP
               nvim-lspconfig
               clangd_extensions-nvim
+              overseer-nvim
 
               # Autopairs
               # TODO
@@ -84,6 +86,7 @@
         # Utilities
         ripgrep
         wl-clipboard
+        just
 
         # LSPs
         nil

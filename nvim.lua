@@ -23,8 +23,8 @@ require('nvim-tree').setup({
     vim.keymap.set('n', '<S-Tab>', file_browser.tree.expand_all, opts('expand'))
   end
 })
-vim.keymap.set('n', '<C-n>', file_browser.tree.toggle)
-vim.keymap.set('i', '<C-n>', file_browser.tree.toggle)
+vim.keymap.set('n', '<C-f>', file_browser.tree.focus)
+vim.keymap.set('i', '<C-f>', file_browser.tree.focus)
 
 -- Set leaders
 vim.g.mapleader = " "
@@ -40,6 +40,45 @@ require('nvim-treesitter.configs').setup({
     enable = true
   },
 })
+
+local overseer = require('overseer')
+overseer.setup({})
+overseer.add_template_hook({ module = "^cargo$" }, function(task_defn, util)
+  util.add_component(task_defn, { "on_output_quickfix", set_diagnostics = true })
+  util.add_component(task_defn, { "on_result_diagnostics" })
+end)
+overseer.add_template_hook({ module = "^just$" }, function(task_defn, util)
+  util.add_component(task_defn, { "on_output_quickfix", set_diagnostics = true })
+  util.add_component(task_defn, { "on_result_diagnostics" })
+end)
+vim.keymap.set('n', '<leader>c', ':OverseerRun<CR>')
+vim.keymap.set('n', '<C-c>', ':OverseerOpen<CR>')
+vim.keymap.set('i', '<C-c>', '<Esc>:OverseerOpen<CR>')
+
+local trouble = require('trouble')
+trouble.setup({
+  focus = true,
+  keys = {
+    ['<Tab>'] = 'jump',
+    ['<S-Tab>'] = 'fold_open_recursive',
+  },
+})
+vim.keymap.set('n', '<C-e>', ':Trouble quickfix<CR>')
+vim.keymap.set('i', '<C-e>', '<Esc>:Trouble quickfix<CR>')
+vim.keymap.set('n', '<C-r>', ':Trouble lsp_references<CR>')
+vim.keymap.set('i', '<C-r>', '<Esc>:Trouble lsp_references<CR>')
+vim.keymap.set('n', '<C-t>', ':Trouble lsp_type_definitions<CR>')
+vim.keymap.set('i', '<C-t>', '<Esc>:Trouble lsp_type_definitions<CR>')
+vim.keymap.set('n', '<C-d>', ':Trouble lsp_definitions<CR>')
+vim.keymap.set('i', '<C-d>', '<Esc>:Trouble lsp_definitions<CR>')
+vim.keymap.set('n', '<C-S-d>', ':Trouble lsp_definitions<CR>')
+vim.keymap.set('i', '<C-S-d>', '<Esc>:Trouble lsp_definitions<CR>')
+vim.keymap.set('n', '<C-s>', ':Trouble lsp_document_symbols win.position=right<CR>')
+vim.keymap.set('i', '<C-s>', '<Esc>:Trouble lsp_document_symbols win.position=right<CR>')
+vim.keymap.set('n', '<C-/>', ':Trouble telescope<CR>')
+vim.keymap.set('i', '<C-/>', '<Esc>:Trouble telescope<CR>')
+vim.keymap.set('n', '<C-o>', ':Trouble telescope_files<CR>')
+vim.keymap.set('i', '<C-o>', '<Esc>:Trouble telescope_files<CR>')
 
 vim.lsp.enable({
   'lua_ls',
@@ -248,12 +287,10 @@ vim.g.clipboard = {
 
 -- Some nice keymaps
 vim.keymap.set("n", ";", ":", { noremap = true })
+vim.keymap.set("v", ";", ":", { noremap = true })
 vim.keymap.set("i", "<C-w>", "<Esc><C-w>")
-
--- Format using =
-vim.keymap.set("n", "=", "gq", { noremap = true })
-vim.keymap.set("n", "==", "gqq", { noremap = true })
-vim.keymap.set("v", "=", "gq", { noremap = true })
+vim.keymap.set('n', '<S-u>', ":redo")
+vim.keymap.set('n', 'q:', ':q<CR>')
 
 -- Motion
 vim.keymap.set("n", "<BS>", "<C-o>")
@@ -322,6 +359,8 @@ end)
 -- Telescope
 local telescope = require('telescope')
 local telescope_actions = require('telescope.actions')
+local telescope_actions_state = require('telescope.actions.state')
+local telescope_trouble = require('trouble.sources.telescope')
 telescope.load_extension('fzf')
 telescope.load_extension('remote-sshfs')
 telescope.setup({
@@ -330,18 +369,32 @@ telescope.setup({
     color_devicons = true,
     mappings = {
       i = {
-        ['<esc>'] = telescope_actions.close
+        ['<Esc>'] = telescope_actions.close,
+        ['<CR>'] = function (prompt_bufnr)
+          local picker = telescope_actions_state.get_current_picker(prompt_bufnr)
+          local multi_selection = picker:get_multi_selection()
+            if #multi_selection > 1 then
+              telescope_trouble.open(prompt_bufnr)
+            else
+              telescope_actions.select_default(prompt_bufnr)
+            end
+          end
       }
     },
   }
 })
 local telescope_builtin = require('telescope.builtin')
-vim.keymap.set('n', '<C-f>', telescope_builtin.find_files)
-vim.keymap.set('i', '<C-f>', telescope_builtin.find_files)
+vim.keymap.set('n', '<leader>f', telescope_builtin.find_files)
+vim.keymap.set('i', '<leader>f', telescope_builtin.find_files)
 vim.keymap.set('n', '<leader>*', telescope_builtin.grep_string)
 vim.keymap.set('n', '<leader>/', telescope_builtin.live_grep)
 vim.keymap.set('n', '<leader><BS>', telescope_builtin.jumplist)
 vim.keymap.set('n', '<leader>p', telescope_builtin.registers)
+
+-- require('remote-sshfs').setup({
+--   ui = { confirm = false },
+-- })
+vim.api.nvim_create_user_command('SSH', 'RemoteSSHFSConnect <args>', { nargs = '*'})
 
 -- Load old style vim
 vim.cmd([[
