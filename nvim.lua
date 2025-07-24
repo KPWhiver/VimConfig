@@ -10,11 +10,17 @@ require('nvim-web-devicons').setup({
 local file_browser = require('nvim-tree.api')
 require('nvim-tree').setup({
   on_attach = function (bufnr)
+    local function opts(desc)
+      return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
     file_browser.config.mappings.default_on_attach(bufnr)
-    vim.keymap.set('n', 'I', file_browser.tree.toggle_gitignore_filter)
-    vim.keymap.set('n', 'H', file_browser.tree.toggle_hidden_filter)
-    vim.keymap.set('n', '<BS>', file_browser.node.navigate.parent)
-    vim.keymap.set('n', '<S-Tab>', file_browser.tree.expand_all)
+    vim.keymap.set('n', 'y', file_browser.fs.copy.node, opts('copy'))
+    vim.keymap.set('n', 'i', file_browser.tree.toggle_gitignore_filter, opts('ignore'))
+    vim.keymap.set('n', 'h', file_browser.tree.toggle_hidden_filter, opts('hidden'))
+    vim.keymap.set('n', '<Esc>', '<C-w><C-w>', opts('cancel'))
+    vim.keymap.set('n', '<BS>', file_browser.node.navigate.parent, opts('parent'))
+    vim.keymap.set('n', '<S-Tab>', file_browser.tree.expand_all, opts('expand'))
   end
 })
 vim.keymap.set('n', '<C-n>', file_browser.tree.toggle)
