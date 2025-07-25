@@ -119,15 +119,6 @@ vim.keymap.set('n', '[d', function()
   end)
 end)
 
--- vim.api.nvim_create_autocmd('LspAttach', {
---   callback = function(ev)
---     local client = vim.lsp.get_client_by_id(ev.data.client_id)
---     if client:supports_method('textDocument/completion') then
---       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
---     end
---   end,
--- })
-
 local lspconfig = require('lspconfig')
 local lsp_defaults = lspconfig.util.default_config
 lsp_defaults.capabilities = vim.tbl_deep_extend(
@@ -327,16 +318,16 @@ gitsigns.setup({
     vim.api.nvim_create_user_command("Gedit", function(opts)
       gitsigns.show(opts.args)
     end, { nargs = "*" })
-    vim.keymap.set("n", "<D-->", function()
+    vim.keymap.set("n", "]-", function()
       gitsigns.nav_hunk('next')
     end)
-    vim.keymap.set("v", "<D-->", function()
+    vim.keymap.set("v", "]-", function()
       gitsigns.nav_hunk('next')
     end)
-    vim.keymap.set("n", "<D-S-->", function()
+    vim.keymap.set("n", "[-", function()
       gitsigns.nav_hunk('prev')
     end)
-    vim.keymap.set("v", "<D-S-->", function()
+    vim.keymap.set("v", "[-", function()
       gitsigns.nav_hunk('prev')
     end)
   end
@@ -402,24 +393,19 @@ vim.keymap.set('n', '<leader>p', telescope_builtin.registers)
 -- })
 vim.api.nvim_create_user_command('SSH', 'RemoteSSHFSConnect <args>', { nargs = '*'})
 
--- Load old style vim
+-- Highlight trailing whitespace
+vim.api.nvim_set_hl(0, 'TrailingWhitespace', { bg='LightRed' })
+vim.api.nvim_create_autocmd('BufEnter', {
+	pattern = '*',
+	command = [[
+		syntax clear TrailingWhitespace |
+		syntax match TrailingWhitespace "\_s\+$"
+	]]}
+)
+
+-- CamelCaseMotion
 vim.cmd([[
-" APPEARANCE {{{ "
-function! MyHighlights() abort
-    highlight Normal guibg=none ctermbg=none
-
-    " Highlight trailing whitespace characters.
-    highlight ExtraWhitespace ctermbg=red guibg=red
-    match ExtraWhitespace /\s\+$/
-endfunction
-
-augroup MyColors
-    autocmd!
-    autocmd ColorScheme * call MyHighlights()
-augroup END
-
-" CamelCaseMotion
-let g:camelcasemotion_key = '<leader>'
+  let g:camelcasemotion_key = '<leader>'
 ]])
 
 -- Theme
