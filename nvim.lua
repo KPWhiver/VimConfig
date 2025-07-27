@@ -138,7 +138,7 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end
   },
-  mapping = cmp.mapping.preset.insert({
+  mapping = cmp.mapping({
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
@@ -406,6 +406,24 @@ vim.api.nvim_create_autocmd('BufEnter', {
 vim.cmd([[
   let g:camelcasemotion_key = '<leader>'
 ]])
+
+-- Open new window
+local clone_window = function ()
+  local esc_code = vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
+  vim.api.nvim_feedkeys(esc_code, 'n', false)
+  vim.api.nvim_feedkeys(esc_code, 'n', false)
+
+  local file_path = vim.fn.expand('%:p')
+  local command = {'foot', 'nvim'}
+  if file_path ~= '' then
+    vim.cmd(':w')
+    table.insert(command, file_path)
+  end
+  vim.fn.jobstart(command, {detach = true})
+end
+vim.keymap.set('i', '<C-n>', clone_window)
+vim.keymap.set('n', '<C-n>', clone_window)
+vim.keymap.set('v', '<C-n>', clone_window)
 
 -- Theme
 require('monokai-pro').setup({
