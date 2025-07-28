@@ -39,6 +39,43 @@ require('nvim-treesitter.configs').setup({
   indent = {
     enable = true
   },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+        ['as'] = { query = '@local.scope', query_group = 'locals' },
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true,
+      goto_next_start = {
+        [']f'] = '@function.outer',
+        [']c'] = '@class.outer',
+        [']s'] = { query = '@local.scope', query_group = 'locals' }
+      },
+      goto_next_end = {
+        [']F'] = '@function.outer',
+        [']C'] = '@class.outer',
+        [']S'] = { query = '@local.scope', query_group = 'locals' }
+      },
+      goto_previous_start = {
+        ['[f'] = '@function.outer',
+        ['[c'] = '@class.outer',
+        ['[s'] = { query = '@local.scope', query_group = 'locals' }
+      },
+      goto_previous_end = {
+        ['[F'] = '@function.outer',
+        ['[C'] = '@class.outer',
+        ['[S'] = { query = '@local.scope', query_group = 'locals' }
+      },
+    },
+  },
 })
 
 local overseer = require('overseer')

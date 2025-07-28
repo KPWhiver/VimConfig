@@ -48,6 +48,7 @@
 
               # Motion
               camelcasemotion
+              nvim-treesitter-textobjects
 
               # Git
               gitsigns-nvim
