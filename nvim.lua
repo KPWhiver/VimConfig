@@ -422,7 +422,9 @@ telescope.setup({
 local telescope_builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>f', telescope_builtin.find_files)
 vim.keymap.set('n', '<leader>*', telescope_builtin.grep_string)
-vim.keymap.set('n', '<leader>/', telescope_builtin.live_grep)
+vim.keymap.set('n', '<leader>/', function()
+  telescope_builtin.grep_string{shorten_path = true, word_match = '-w', only_sort_text = true, search = ''}
+end)
 vim.keymap.set('n', '<leader><BS>', telescope_builtin.jumplist)
 vim.keymap.set('n', '<leader>p', telescope_builtin.registers)
 
