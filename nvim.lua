@@ -23,8 +23,7 @@ require('nvim-tree').setup({
     vim.keymap.set('n', '<S-Tab>', file_browser.tree.expand_all, opts('expand'))
   end
 })
-vim.keymap.set('n', '<C-f>', file_browser.tree.focus)
-vim.keymap.set('i', '<C-f>', file_browser.tree.focus)
+vim.keymap.set({'n', 'i'}, '<C-f>', file_browser.tree.focus)
 
 -- Set leaders
 vim.g.mapleader = " "
@@ -89,8 +88,7 @@ overseer.add_template_hook({ module = "^just$" }, function(task_defn, util)
   util.add_component(task_defn, { "on_result_diagnostics" })
 end)
 vim.keymap.set('n', '<leader>c', ':OverseerRun<CR>')
-vim.keymap.set('n', '<C-c>', ':OverseerOpen<CR>')
-vim.keymap.set('i', '<C-c>', '<Esc>:OverseerOpen<CR>')
+vim.keymap.set({'n', 'i'}, '<C-c>', '<Esc>:OverseerOpen<CR>')
 
 local trouble = require('trouble')
 trouble.setup({
@@ -100,22 +98,14 @@ trouble.setup({
     ['<S-Tab>'] = 'fold_open_recursive',
   },
 })
-vim.keymap.set('n', '<C-e>', ':Trouble quickfix<CR>')
-vim.keymap.set('i', '<C-e>', '<Esc>:Trouble quickfix<CR>')
-vim.keymap.set('n', '<C-r>', ':Trouble lsp_references<CR>')
-vim.keymap.set('i', '<C-r>', '<Esc>:Trouble lsp_references<CR>')
-vim.keymap.set('n', '<C-t>', ':Trouble lsp_type_definitions<CR>')
-vim.keymap.set('i', '<C-t>', '<Esc>:Trouble lsp_type_definitions<CR>')
-vim.keymap.set('n', '<C-d>', ':Trouble lsp_definitions<CR>')
-vim.keymap.set('i', '<C-d>', '<Esc>:Trouble lsp_definitions<CR>')
-vim.keymap.set('n', '<C-S-d>', ':Trouble lsp_definitions<CR>')
-vim.keymap.set('i', '<C-S-d>', '<Esc>:Trouble lsp_definitions<CR>')
-vim.keymap.set('n', '<C-s>', ':Trouble lsp_document_symbols win.position=right<CR>')
-vim.keymap.set('i', '<C-s>', '<Esc>:Trouble lsp_document_symbols win.position=right<CR>')
-vim.keymap.set('n', '<C-/>', ':Trouble telescope<CR>')
-vim.keymap.set('i', '<C-/>', '<Esc>:Trouble telescope<CR>')
-vim.keymap.set('n', '<C-o>', ':Trouble telescope_files<CR>')
-vim.keymap.set('i', '<C-o>', '<Esc>:Trouble telescope_files<CR>')
+vim.keymap.set({'n', 'i'}, '<C-e>', '<Esc>:Trouble quickfix<CR>')
+vim.keymap.set({'n', 'i'}, '<C-r>', '<Esc>:Trouble lsp_references<CR>')
+vim.keymap.set({'n', 'i'}, '<C-t>', '<Esc>:Trouble lsp_type_definitions<CR>')
+vim.keymap.set({'n', 'i'}, '<C-d>', '<Esc>:Trouble lsp_definitions<CR>')
+vim.keymap.set({'n', 'i'}, '<C-S-d>', '<Esc>:Trouble lsp_definitions<CR>')
+vim.keymap.set({'n', 'i'}, '<C-s>', '<Esc>:Trouble lsp_document_symbols win.position=right<CR>')
+vim.keymap.set({'n', 'i'}, '<C-/>', '<Esc>:Trouble telescope<CR>')
+vim.keymap.set({'n', 'i'}, '<C-o>', '<Esc>:Trouble telescope_files<CR>')
 
 vim.lsp.enable({
   'lua_ls',
@@ -260,10 +250,8 @@ vim.opt.foldtext = ''
 vim.opt.foldnestmax = 4
 vim.keymap.set("n", "<Tab>", "za", {noremap = true })
 vim.keymap.set("n", "<S-Tab>", "zA", {noremap = true })
-vim.keymap.set("n", "]<Tab>", "zj", { noremap = true })
-vim.keymap.set("v", "]<Tab>", "zj", { noremap = true })
-vim.keymap.set("n", "[<Tab>", "zk", { noremap = true })
-vim.keymap.set("v", "[<Tab>", "zk", { noremap = true })
+vim.keymap.set({'n', 'v'}, "]<Tab>", "zj", { noremap = true })
+vim.keymap.set({'n', 'v'}, "[<Tab>", "zk", { noremap = true })
 
 -- Visual cues
 local sign = function(opts)
@@ -320,8 +308,7 @@ vim.g.clipboard = {
 }
 
 -- Some nice keymaps
-vim.keymap.set("n", ";", ":", { noremap = true })
-vim.keymap.set("v", ";", ":", { noremap = true })
+vim.keymap.set({'n', 'v'}, ";", ":", { noremap = true })
 vim.keymap.set("i", "<C-w>", "<Esc><C-w>")
 vim.keymap.set('n', '<S-u>', ":redo")
 vim.keymap.set('n', 'q:', ':q<CR>')
@@ -329,9 +316,7 @@ vim.keymap.set('n', 'q:', ':q<CR>')
 -- Motion
 vim.keymap.set("n", "<BS>", "<C-o>")
 vim.keymap.set("n", "<S-Del>", "<C-i>")  -- Shift Backspace (send by foot)
-vim.keymap.set("c", "<S-Del>", "<BS>")   -- Shift Backspace (send by foot)
-vim.keymap.set("i", "<S-Del>", "<BS>")   -- Shift Backspace (send by foot)
-vim.keymap.set("v", "<S-Del>", "<BS>")   -- Shift Backspace (send by foot)
+vim.keymap.set({'c', 'i', 'v'}, "<S-Del>", "<BS>")   -- Shift Backspace (send by foot)
 
 -- Write file using sudo
 vim.api.nvim_create_user_command('SUw', 'w !sudo -S tee "%" > /dev/null', {})
@@ -462,9 +447,7 @@ local clone_window = function ()
   end
   vim.fn.jobstart(command, {detach = true})
 end
-vim.keymap.set('i', '<C-n>', clone_window)
-vim.keymap.set('n', '<C-n>', clone_window)
-vim.keymap.set('v', '<C-n>', clone_window)
+vim.keymap.set({'i', 'n', 'v'}, '<C-n>', clone_window)
 
 -- Theme
 require('monokai-pro').setup({
