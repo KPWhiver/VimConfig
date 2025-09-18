@@ -29,6 +29,9 @@ vim.keymap.set({'n', 'i'}, '<C-f>', file_browser.tree.focus)
 vim.g.mapleader = ' '
 vim.keymap.set('n', '<space>', '<nop>', { noremap = true })
 
+-- Auto pairs
+require('nvim-autopairs').setup({})
+
 -- LSP & treesitter
 require('nvim-treesitter.configs').setup({
   highlight = {

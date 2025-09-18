@@ -59,8 +59,7 @@
               overseer-nvim
 
               # Autopairs
-              # TODO
-              #nvim-autopairs
+              nvim-autopairs
 
               # Snippets
               luasnip
