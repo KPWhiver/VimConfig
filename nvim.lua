@@ -11,7 +11,7 @@ local file_browser = require('nvim-tree.api')
 require('nvim-tree').setup({
   on_attach = function (bufnr)
     local function opts(desc)
-      return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+      return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
     end
 
     file_browser.config.mappings.default_on_attach(bufnr)
@@ -26,8 +26,8 @@ require('nvim-tree').setup({
 vim.keymap.set({'n', 'i'}, '<C-f>', file_browser.tree.focus)
 
 -- Set leaders
-vim.g.mapleader = " "
-vim.keymap.set("n", "<space>", "<nop>", { noremap = true })
+vim.g.mapleader = ' '
+vim.keymap.set('n', '<space>', '<nop>', { noremap = true })
 
 -- LSP & treesitter
 require('nvim-treesitter.configs').setup({
@@ -79,13 +79,13 @@ require('nvim-treesitter.configs').setup({
 
 local overseer = require('overseer')
 overseer.setup({})
-overseer.add_template_hook({ module = "^cargo$" }, function(task_defn, util)
-  util.add_component(task_defn, { "on_output_quickfix", set_diagnostics = true })
-  util.add_component(task_defn, { "on_result_diagnostics" })
+overseer.add_template_hook({ module = '^cargo$' }, function(task_defn, util)
+  util.add_component(task_defn, { 'on_output_quickfix', set_diagnostics = true })
+  util.add_component(task_defn, { 'on_result_diagnostics' })
 end)
-overseer.add_template_hook({ module = "^just$" }, function(task_defn, util)
-  util.add_component(task_defn, { "on_output_quickfix", set_diagnostics = true })
-  util.add_component(task_defn, { "on_result_diagnostics" })
+overseer.add_template_hook({ module = '^just$' }, function(task_defn, util)
+  util.add_component(task_defn, { 'on_output_quickfix', set_diagnostics = true })
+  util.add_component(task_defn, { 'on_result_diagnostics' })
 end)
 vim.keymap.set('n', '<leader>c', ':OverseerRun<CR>')
 vim.keymap.set({'n', 'i'}, '<C-c>', '<Esc>:OverseerOpen<CR>')
@@ -131,7 +131,7 @@ vim.lsp.config('yamlls', {
   }
 })
 vim.lsp.config('jsonls', {
-  cmd = { "vscode-json-languageserver", "--stdio" },
+  cmd = { 'vscode-json-languageserver', '--stdio' },
 })
 vim.keymap.set('n', ']d', function()
   vim.diagnostic.goto_next()
@@ -195,7 +195,7 @@ cmp.setup {
       cmp.config.compare.offset,
       cmp.config.compare.exact,
       cmp.config.compare.recently_used,
-      require("clangd_extensions.cmp_scores"),
+      require('clangd_extensions.cmp_scores'),
       cmp.config.compare.kind,
       cmp.config.compare.sort_text,
       cmp.config.compare.length,
@@ -218,7 +218,7 @@ cmp.setup {
 }
 
 -- Enable mouse control
-vim.opt.mouse = "a"
+vim.opt.mouse = 'a'
 
 -- Bash-like command completion
 -- First tab completes as much as possible
@@ -229,7 +229,7 @@ vim.opt.wildmenu = true
 -- History
 vim.opt.history = 1000
 vim.opt.undolevels = 1000
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
 vim.opt.undofile = true
 
 -- Don't make temporary/backup files
@@ -248,10 +248,10 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldtext = ''
 vim.opt.foldnestmax = 4
-vim.keymap.set("n", "<Tab>", "za", {noremap = true })
-vim.keymap.set("n", "<S-Tab>", "zA", {noremap = true })
-vim.keymap.set({'n', 'v'}, "]<Tab>", "zj", { noremap = true })
-vim.keymap.set({'n', 'v'}, "[<Tab>", "zk", { noremap = true })
+vim.keymap.set('n', '<Tab>', 'za', {noremap = true })
+vim.keymap.set('n', '<S-Tab>', 'zA', {noremap = true })
+vim.keymap.set({'n', 'v'}, ']<Tab>', 'zj', { noremap = true })
+vim.keymap.set({'n', 'v'}, '[<Tab>', 'zk', { noremap = true })
 
 -- Visual cues
 local sign = function(opts)
@@ -294,29 +294,29 @@ vim.opt.smartcase = true      -- Override ignorecase if there are capitals in th
 vim.opt.wildignorecase = true -- Case insensitive filename completion
 
 -- Clipboard
-vim.opt.clipboard = "unnamedplus" -- Copy to system clipboard
+vim.opt.clipboard = 'unnamedplus' -- Copy to system clipboard
 vim.g.clipboard = {
-  name = "OSC 52",
+  name = 'OSC 52',
   copy = {
-    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
   },
   paste = {
-    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
   },
 }
 
 -- Some nice keymaps
-vim.keymap.set({'n', 'v'}, ";", ":", { noremap = true })
-vim.keymap.set("i", "<C-w>", "<Esc><C-w>")
-vim.keymap.set('n', '<S-u>', ":redo")
+vim.keymap.set({'n', 'v'}, ';', ':', { noremap = true })
+vim.keymap.set('i', '<C-w>', '<Esc><C-w>')
+vim.keymap.set('n', '<S-u>', ':redo')
 vim.keymap.set('n', 'q:', ':q<CR>')
 
 -- Motion
-vim.keymap.set("n", "<BS>", "<C-o>")
-vim.keymap.set("n", "<S-Del>", "<C-i>")  -- Shift Backspace (send by foot)
-vim.keymap.set({'c', 'i', 'v'}, "<S-Del>", "<BS>")   -- Shift Backspace (send by foot)
+vim.keymap.set('n', '<BS>', '<C-o>')
+vim.keymap.set('n', '<S-Del>', '<C-i>')  -- Shift Backspace (send by foot)
+vim.keymap.set({'c', 'i', 'v'}, '<S-Del>', '<BS>')   -- Shift Backspace (send by foot)
 
 -- Write file using sudo
 vim.api.nvim_create_user_command('SUw', 'w !sudo -S tee "%" > /dev/null', {})
@@ -329,29 +329,23 @@ local gitsigns = require('gitsigns')
 gitsigns.setup({
   current_line_blame = true,
   on_attach = function()
-    vim.keymap.set("n", "-d", gitsigns.preview_hunk_inline)
-    vim.keymap.set("n", "-a", gitsigns.stage_hunk)
-    vim.keymap.set("v", "-a", function()
+    vim.keymap.set('n', '-d', gitsigns.preview_hunk_inline)
+    vim.keymap.set('n', '-a', gitsigns.stage_hunk)
+    vim.keymap.set('v', '-a', function()
       gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
     end)
-    vim.keymap.set("n", "-u", gitsigns.reset_hunk)
-    vim.keymap.set("v", "-u", function()
+    vim.keymap.set('n', '-u', gitsigns.reset_hunk)
+    vim.keymap.set('v', '-u', function()
       gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
     end)
-    vim.keymap.set("n", "-b", gitsigns.blame)
-    vim.api.nvim_create_user_command("Gedit", function(opts)
+    vim.keymap.set('n', '-b', gitsigns.blame)
+    vim.api.nvim_create_user_command('Gedit', function(opts)
       gitsigns.show(opts.args)
-    end, { nargs = "*" })
-    vim.keymap.set("n", "]-", function()
+    end, { nargs = '*' })
+    vim.keymap.set({'n', 'v'}, ']-', function()
       gitsigns.nav_hunk('next')
     end)
-    vim.keymap.set("v", "]-", function()
-      gitsigns.nav_hunk('next')
-    end)
-    vim.keymap.set("n", "[-", function()
-      gitsigns.nav_hunk('prev')
-    end)
-    vim.keymap.set("v", "[-", function()
+    vim.keymap.set({'n', 'v'}, '[-', function()
       gitsigns.nav_hunk('prev')
     end)
   end
@@ -364,7 +358,7 @@ require('toggleterm').setup({
   },
   highlights = {
     NormalFloat = {
-      link = "TelescopeNormal",
+      link = 'TelescopeNormal',
     },
   },
 })
