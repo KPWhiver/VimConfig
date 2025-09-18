@@ -444,9 +444,9 @@ vim.api.nvim_create_autocmd('BufEnter', {
 )
 
 -- CamelCaseMotion
-vim.cmd([[
-  let g:camelcasemotion_key = '<leader>'
-]])
+vim.keymap.set('n', '\'', '<Plug>CamelCaseMotion_w')
+vim.keymap.set({'o', 'x'}, 'i\'', '<Plug>CamelCaseMotion_ie')
+vim.keymap.set({'o', 'x'}, '\'', '<Plug>CamelCaseMotion_e')
 
 -- Open new window
 local clone_window = function ()
